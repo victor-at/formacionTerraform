@@ -1,0 +1,164 @@
+¿Qué es Terraform?
+    Infraestructura como código
+    Infraestructura:
+        Máquinas
+        Servicios
+        Redes
+    
+    ALQUILARLA a quién? 
+    A proveedores a través de INTERNET
+
+    AUTOMATIZAR EL ALQUILER DE LA INFRA <<< Programa (escribiendo código)
+
+    Alquilar la infra a un Cloud.
+    Qué es un cloud?
+        El conjunto de servicios que ofrece una empresa a través de Internet
+        AWS: conjunto de servicios que ofrece AMAZON a través de Internet
+        AZURE: conjunto de servicios que ofrece MS a través de Internet
+        GCLOUD: conjunto de servicios que ofrece GOOGLE a través de Internet
+
+    Qué tipo de servicios ofrecen las emrpesas a través de los clouds?
+        IaaS   Infraestructura (máquinas, almacenamiento, redes, firewalls,)
+        PaaS   Plataforma      (bases de datos, servidores web, )
+        SaaS   Software        (correo electronico. gmail)
+
+    Terraform
+        Código (especificación requisitos) ---->>> Proveedor ---> Las cosas que le pida
+        Código (especificación infraestructura)  ---->  CLOUD ---> Infraestrura
+        Código (especificación lo que sea IaaS, PaaS, SaaS)
+
+Puedo usar TF para proveedores no cloud? SI
+    Lo voy a usar: NO
+
+Terraform: 
+    Automatizar un trabajo
+
+---------------------------------------------------------------------
+
+Devops: Mola!!!! 
+    Metodología: RUINA !!!!
+        PROCEDIMIENTOS / PROCESOS
+    Filosofía √√√
+        Automatizar que?
+            TODO lo que sea susceptible de automatizarse
+    
+    IT:
+        Creación de recursos
+        Inicializar apps
+        Despliegues de código
+        Empaquetado de apps
+        Pruebas... tester
+        Monitorización
+
+Proyecto de software:
+    Requerimientos:
+        Plan tareas        <<<<<< Automatizable?   NO
+        Escribir código    <<<<<< Automatizable?   NO
+            (Repo de un sistema de control de versión)
+        -------------------------------------------------------
+        Aprovisionar máquinas
+            Terraform: Infraestructura Cloud
+            Vagrant:   Gestión de maquinas virtuales
+            Ansible, puppet: Montar software y configurarlas
+        Empaquetarlo (compilación, linkado, añadido de librerias externas, recursos externos, configuraciones...)
+            Maven
+            Gradle
+            MSBuild
+        Desplegarlo
+        Testearlo
+            Selenium, Appium, SonarQube, JMeter, Postman, SoapUI
+>>>>>>  Integración continua
+
+        Empaquetado
+        Quiero dejarlo registrado en algún sitio
+            (Repos de artefactos) Nexus, Artfactory
+>>>>>>  Entrega continua (Continuous delivery)
+
+        Entorno de Producción
+        Despliegue Producción
+>>>>>>  Despliegue Continuo
+
+        Monitorización
+            Nagios
+            ELK: Elastic, Kibana, Logstash + BEATS
+            Phometheus + Grafana
+        Operación (Escalados, reinicios, alta disponibilidad)
+            Kubernetes
+            Openshift
+Quien coordina todas las tareas automatizadas?
+    Servidor de CI/CD: Jenkins, AzureDevops, AWS pipelines, gitlab CI/CD,
+                       Bamboo, Teamcity, TravisCI
+
+Perfil Devops: Jenkins + Ansible + Terraform + Kubernetes
+
+
+
+-----
+Es importante automatizar?
+Ventajas:
+    - Horas de trabajo / Ahorro de tiempo a medio plazo
+        Hoy en día hacemos MUCHAS instalaciones de una aplicación:
+            Metodologías Ágiles: Kanban, Scrum, XtremeProgramming
+                Iteración, progresividad
+    - Limitar errores / Quito el factor humano
+    - Abstracción
+    - Velocidad de ejecución
+
+Terraform: Alquilar infraestructura
+    Es critica la velocidad? Puesta a disposición al usuario final
+
+App: 
+    día 100  >  110   > 200   > 500   > 1000
+    Dimensionaba al pico (2000)
+
+
+    dia n: 100; dia n+1: 100000; n+2: 300; n+3: 50000
+                    Black friday           Ciber Monday
+
+    Me dimensiono a los 100?
+    Me dimensiono a los 100000?
+    Escalabilidad: Me dimensiono a lo que necesite:
+        Cuando tengo poco... no voy a estar pagando maquinas que no uso
+        Cuando tengo mucho: Necesito más máquinas
+           
+-------------------------------------------
+Proceso:
+    1º Instalar terraform. <<< Servidor central? No
+        Donde quiera... en mi maquina... donde el Jenkins
+        Se instala bajo demanda en un contenedor y cuando acabo de ejecutarlo:
+            Lo tiro a la basura
+    
+    2º Tener unos ficheros de especificación de infraestructura
+        Sintaxis: HCL: Lenguaje propietario de Hashicorp
+            Se parece a: JSON + YAML
+    
+    3º Flujo de trabajo de Terraform
+        Init
+        Validate
+        Plan
+        Apply
+        Destroy
+
+        Gracias al cli de Terraform: terraform
+
+cli? Command line interpreter
+
+Qué estamos haciendo realmente?
+    Mandar órdenes a la API del proveedor de cloud correspondiente para que 
+        alquile/desalquile... una infra
+    Las mandamos mediante la ejecución de un PROGRAMA
+
+El fichero HCL es un PROGRAMA: Especificación de infra => Script 
+    Todo el código lo pongo en un REPO de un SCM
+        Mi programa va a evolucionar
+    
+    git <<< Linus Torwals
+        gitlab
+        bitbucket
+        github
+
+Software (Programas):
+    Servicio        
+    Demonio
+    Aplicación
+    Script

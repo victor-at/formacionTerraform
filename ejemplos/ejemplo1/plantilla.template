@@ -1,0 +1,29 @@
+/*
+    Esto es un comentario en bloque
+    Es decir, puede ocupar varias lineas
+    Y todo se toma como comentario
+*/
+terraform { # Esto también se toma como un comentario. En este caso hasta el final de la linea
+    # Esta marca va a aparecer SOLO UNA vez
+    required_providers {
+        NOMBRE_DEL_PROVEEDOR = {
+            source = "RUTA DEL REPO QUE CONTIENE EL PLUGIN QUE ES NECESARIO"
+        }
+    }
+}
+
+provider NOMBRE_DEL_PROVEEDOR { # Los nombres de proveedores, los sacamos de la docum. oficial
+    # Esta marca puede aparecer varias veces
+    # Pueden tener configuracion adicional. Si tiene conf. VA AQUI
+    
+    # En ocasiones, determinados proveedores, no son proveedores oficiales, 
+    # que ya vienen con Terraform de antemano. En este caso, tengo que decirle a Terraform
+    # cual es el PLUGIN que tiene que instalar para trabajar con un determinado proveedor.
+    # En ese caso, la información del plugin que ha utilizarse, se declara
+    # dentro de la marca TERRAFORM
+}
+
+# Vamos a tener una marca resource para cada recurso de infra que necesitemos tener
+resource "NOMBRE_DEL_PROVEEDOR_tipo_de_recurso" "NOMBRE_IDENTIFICATIVO_DE_RECURSO"{ 
+    # Aqui iria la configuración de ese recurso concreto... Dependerá del tipo de recurso
+}
