@@ -1,0 +1,43 @@
+- hosts: all 
+
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Actualizar referencias de librerias y dependencias
+      apt: 
+        update_cache: yes
+    
+    - name: Instalar los paquetes necesarios para ejecutar docker
+      apt: name={{ item }} state=latest update_cache=yes
+      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+
+    - name: Añadir la clave del repo de docker
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Añadir el repositorio de docker
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Instalar docker-ce
+      apt: update_cache=yes name=docker-ce state=latest
+
+    - name: Instalar el modulo de docker para python
+      pip:
+        name: docker
+        version: 3.2.1
+  
+    - name: Descargar imagen de tomcat
+      docker_image:
+        name: bitnami/tomcat
+        pull: yes
+
+    - name: Create default containers
+      docker_container:
+        name: tomcat
+        image: bitnami/tomcat
+        state: present
+        expose:
+        - 8080
